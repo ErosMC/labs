@@ -18,6 +18,9 @@ export class Cabezera_Factura {
     @Column()
     fecha: Date 
 
+    @Column()
+    Estado: boolean
+    
     @OneToMany(() => Detalle_Factura, (Detalle_Factura) => Detalle_Factura.Numero)
     producto:Detalle_Factura[]
 }

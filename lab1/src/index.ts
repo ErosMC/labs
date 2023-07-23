@@ -1,30 +1,25 @@
-import * as express from "express"
-import * as bodyParser from "body-parser"
-import { Request, Response } from "express"
-import { AppDataSource } from "./data-source"
-import { Cliente } from "./entity/Cliente"
-import { Vendedor } from "./entity/Vendedor"
-import { Proveedor } from "./entity/Proveedor"
-import { Producto } from "./entity/Producto"
-import { Cabezera_Factura } from "./entity/Cabezera_Factura"
-import { Detalle_Factura } from "./entity/Detalle_Factura"
+import * as express from "express";
+import { AppDataSource } from "./data-source";
+import cors = require("cors");
+import helmet from "helmet";
+import routes from "./routes";
 
-AppDataSource.initialize().then(async () => {
+const PORT = process.env.port || 3000;
 
+AppDataSource.initialize()
+  .then(async () => {
     // create express app
-    const app = express()
-    app.use(bodyParser.json())
+    const app = express();
+    app.use(cors());
+    app.use(helmet());
+    app.use(express.json());
 
-    
-
-    // setup express app here
-    // ...
+    //rutas
+    app.use("/", routes);
 
     // start express server
-    app.listen(3000)
-
-
-
-    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results")
-
-}).catch(error => console.log(error))
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en puerto: ${PORT}`);
+    });
+  })
+  .catch((error) => console.log(error));

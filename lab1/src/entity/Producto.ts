@@ -7,8 +7,11 @@ export class Producto {
     @PrimaryGeneratedColumn()
     Codigo_producto: number
 
-    @Column({ length: 50 })
-   Precio_producto: string
+    @Column({length: 50})
+    Nombre: string
+
+    @Column()
+    Precio_producto: number
 
     @Column()
     Stock_maximo_producto: number
